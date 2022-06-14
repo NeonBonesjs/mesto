@@ -1,0 +1,25 @@
+.page__line{
+  max-width:880px;
+  margin: 41px 200px 36.25px 200px;
+  height: 1px;
+  background-color: #545454;
+  opacity: 70%;
+}
+@media screen and (max-width:1080px) {
+  .page__line{
+    margin: 41px 100px 36.25px 100px;
+  }
+}
+@media screen and (max-width:880px) {
+  .page__line{
+    margin: 41px 50px 36.25px 50px;
+  }
+}
+@media screen and (max-width:550px) {
+  .page__line{
+    margin: 31.6px 0 38.25px 0;
+    height: 1px;
+    background-color: #545454;
+    opacity: 70%;
+  }
+}

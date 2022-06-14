@@ -34,3 +34,15 @@
   font-style: normal;
   font-weight: 900;
 }
+@font-face {
+  font-family: 'Inter';
+  src: url(./Inter-Medium.woff) format('woff');
+  font-style: normal;
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url(./Inter-Medium.woff2) format('woff2');
+  font-style: normal;
+  font-weight: 500;
+}

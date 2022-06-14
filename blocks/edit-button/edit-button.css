@@ -1,0 +1,14 @@
+.edit-button {
+  grid-area: edit;
+  align-self: center;
+  transition: opacity ease-in-out 0.4s;
+}
+.edit-button:hover{
+  opacity: 0.6;
+}
+@media screen and (max-width:550px) {
+  .edit-button{
+    height: 18px;
+    width: 18px;
+  }
+}

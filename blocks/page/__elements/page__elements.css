@@ -1,0 +1,18 @@
+.page__elements{
+  margin: 0 200px;
+}
+@media screen and (max-width:1080px) {
+  .page__elements{
+    margin: 0 100px;
+  }
+}
+@media screen and (max-width:880px) {
+  .page__elements{
+    margin: 0 50px;
+  }
+}
+@media screen and (max-width:550px) {
+  .page__elements{
+    margin: 0 19px;
+  }
+}
