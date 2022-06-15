@@ -3,7 +3,6 @@
   max-width: 880px;
   justify-content: space-between;
   align-items: center;
-  overflow: hidden;
 }
 @media screen and (max-width:680px) {
   .profile{

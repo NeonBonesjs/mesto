@@ -6,116 +6,109 @@
         <link rel="stylesheet" href="./pages/index.css">
         <title>Место</title>
     </head>
-    <body>
-        <div class="root">
-            <div class="page root__page">
+    <body class="root">
+        <div class="page root__page">
+            <main class="main">
                 <header class="header page__header">
                     <img src="./image/logo.svg" alt="лого" class="logo">
-
                 </header>
-                <div class="page__line"></div>
                 <section class="profile page__profile">
                     <div class="profile__avatar-info">
                         <img src="./image/Avatar.png" alt="аватар" class="profile__avatar">
 
                         <div class="profile__info">
                             <h1 class="profile__name">Жак-Ив Кусто</h1>
-                            <h2 class="profile__subname">Исследователь океана</h2>
-                            <img
-                                src="./image/edit.png"
-                                alt="кнопка редактирования профиля"
-                                class="edit-button">
+                            <p class="profile__subname">Исследователь океана</p>
+                            <button class="profile__edit-button" type="button"></button>
                         </div>
                     </div>
-                    <div class="add-button"></div>
+                    <button class="profile__add-button" type="button"></button>
                 </section>
                 <section class="elements page__elements">
                     <div class="element">
                         <img src="./image/karachaevo.jpg" alt="Карачаевск" class="element__image">
                         <div class="element__name-like">
-                            <p class="element__name">
+                            <h2 class="element__name">
                                 Карачаевск
-                            </p>
-                            <div class="like-button"></div>
+                            </h2>
+                            <button class="element__like-button" type="button"></button>
                         </div>
                     </div>
                     <div class="element">
                         <img src="./image/elbrus.jpg" alt="Гора Эльбрус" class="element__image">
                         <div class="element__name-like">
-                            <p class="element__name">
+                            <h2 class="element__name">
                                 Гора Эльбрус
-                            </p>
-                            <div class="like-button"></div>
+                            </h2>
+                            <button class="element__like-button" type="button"></button>
                         </div>
                     </div>
                     <div class="element">
                         <img src="./image/dombay.jpg" alt="Домбай" class="element__image">
                         <div class="element__name-like">
-                            <p class="element__name">
+                            <h2 class="element__name">
                                 Домбай
-                            </p>
-                            <div class="like-button"></div>
+                            </h2>
+                            <button class="element__like-button" type="button"></button>
                         </div>
                     </div>
                     <div class="element">
                         <img src="./image/elbrus.jpg" alt="Гора Эльбрус" class="element__image">
                         <div class="element__name-like">
-                            <p class="element__name">
+                            <h2 class="element__name">
                                 Гора Эльбрус
-                            </p>
-
-                            <div class="like-button"></div>
+                            </h2>
+                            <button class="element__like-button" type="button"></button>
                         </div>
                     </div>
                     <div class="element">
                         <img src="./image/dombay.jpg" alt="Домбай" class="element__image">
                         <div class="element__name-like">
-                            <p class="element__name">
+                            <h2 class="element__name">
                                 Домбай
-                            </p>
-                            <div class="like-button"></div>
+                            </h2>
+                            <button class="element__like-button" type="button"></button>
                         </div>
                     </div>
                     <div class="element">
-                        <img src="./image/karachaevo.jpg" alt="Карачаево-Черкессия" class="element__image">
+                        <img
+                            src="./image/karachaevo.jpg"
+                            alt="Карачаево-Черкессия"
+                            class="element__image">
                         <div class="element__name-like">
-                            <p class="element__name">
+                            <h2 class="element__name">
                                 Карачаево-Черкессия
-                            </p>
-                            <div class="like-button"></div>
+                            </h2>
+                            <button class="element__like-button" type="button"></button>
                         </div>
-
                     </div>
                 </section>
-                <footer class="footer">
-                    <p class="footer__copyrighting">
-                        © 2020 Mesto Russia
-                    </p>
-                </footer>
-                <div class="popup">
-                    <div class="popup__container">
-                        <h2 class="popup__title">
-                            Редактировать профиль
-                        </h2>
-                        <form class="form">
-                            <fieldset class="popup__forms">
-                                <input
-                                    type="text"
-                                    name="form__name"
-                                    class="popup__form popup__form_type_name"
-                                    value="">
-                                <input
-                                    type="text"
-                                    name="form__subname"
-                                    class="popup__form popup__form_type_subname"
-                                    value="">
-                                <button type="submit" class="popup__button-save">Сохранить</button>
-                                <input type="reset" class="popup__close" value="">
+            </main>
+            <footer class="footer">
+                <p class="footer__copyrighting">
+                    © 2020 Mesto Russia
+                </p>
+            </footer>
+            <div class="popup">
+                <div class="popup__container">
+                    <h2 class="popup__title">
+                        Редактировать профиль
+                    </h2>
+                    <form class="popup__forms" name="form-edit">
 
-                            </fieldset>
-
-                        </form>
-                    </div>
+                        <input
+                            type="text"
+                            name="form__name"
+                            class="popup__form popup__form_type_name"
+                            value="">
+                        <input
+                            type="text"
+                            name="form__subname"
+                            class="popup__form popup__form_type_subname"
+                            value="">
+                        <button type="submit" class="popup__button-save">Сохранить</button>
+                    </form>
+                    <button class="popup__close" type="button"></button>
                 </div>
             </div>
         </div>

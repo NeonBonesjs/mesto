@@ -1,7 +1,7 @@
 .element__name-like{
   display: flex;
   justify-content: space-between;
-  margin: 25px 15px 31px 21px;
+  margin: 25px 15px 25px 21px;
   align-items: center;
 }
 @media screen and (max-width:880px) {
@@ -11,6 +11,6 @@
 }
 @media screen and (max-width:550px) {
   .element__name-like{
-    margin: 25px 15px 31px 21px;
+    margin: 25px 15px 25px 21px;
   }
 }

@@ -1,5 +1,5 @@
 .page__elements{
-  margin: 0 200px;
+  margin: 0 auto;
 }
 @media screen and (max-width:1080px) {
   .page__elements{
