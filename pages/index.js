@@ -7,8 +7,8 @@ let form = document.querySelector('.popup__forms')
 let formName = document.querySelector('.popup__form_type_name');
 let formSubname = document.querySelector('.popup__form_type_subname');
 function inValue() {
-    formName.setAttribute('value', name.textContent);
-    formSubname.setAttribute('value', subname.textContent);
+    formName.value = name.textContent;
+    formSubname.value = subname.textContent;
 }
 function editor() {
     popup
@@ -21,13 +21,10 @@ function closeEditor() {
     popup
         .classList
         .remove('popup_active');
-    inValue();
 }
 closeButton.addEventListener('click', closeEditor);
 function formSubmitHandler(evt) {
     evt.preventDefault();
-    let name = document.querySelector('.profile__name');
-    let subname = document.querySelector('.profile__subname');
     name.textContent = formName.value;
     subname.textContent = formSubname.value;
     closeEditor();
