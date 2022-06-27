@@ -5,7 +5,13 @@
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 1s, visibility 0s 1s;
+}
+.popup:last-of-type{
+  background-color: rgba(0, 0, 0, 0.9);
 }
