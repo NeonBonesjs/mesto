@@ -1,7 +1,9 @@
 .element__trash{
   background: none;
   border: 0;
-  background: url(../../../image/Trash.svg) center no-repeat;
+  background-image: url(../../../image/Trash.svg);
+  background-position: center;
+  background-repeat: no-repeat;
   background-size: 18px 19px;
   width: 18px;
   height: 19px;
