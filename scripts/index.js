@@ -1,32 +1,15 @@
-const elements = document.querySelector('.elements');
+const elementList = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element-template').content;
-const initialCards = [
-    {
-      title: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      title: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      title: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      title: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      title: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      title: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    },
-  ];
-
+//
+const editButton = document.querySelector('.profile__edit-button');
+const popups = document.querySelectorAll('.popup');
+const popupEdit = document.querySelector('.popup_edit');
+const popupAddPhoto = document.querySelector('.popup_add-photo');
+const popupPhoto = document.querySelector('.popup_photo');
+const addPhotoButton = document.querySelector('.profile__add-button');
+const popupImage = document.querySelector('.popup__image');
+const popupText = document.querySelector('.popup__text');
+//
 
 
 // Реализовал появление карточек из заданного массива
@@ -37,14 +20,20 @@ const renderItems = () => {
 
 
 const renderItem = (item) => {
-    const card = elementTemplate.cloneNode(true);
-    card.querySelector('.element__name').textContent = item.title;//функция обработчик  
-    card.querySelector('.element__image').src = item.link;
-    setEventListener(card);
-    elements.insertBefore(card, elements.firstElementChild);
+    
+    elementList.insertBefore(createItem(item), elementList.firstElementChild);//функция вставки карточки
 
 }
 
+        const createItem = (item) => {
+        const card = elementTemplate.cloneNode(true);
+        card.querySelector('.element__name').textContent = item.title;//функция создания карточки
+        card.querySelector('.element__image').src = item.link;
+        card.querySelector('.element__image').alt = item.title;
+        setEventListener(card);
+        return card;
+    }
+    
 
 function handleDelete(evt){
     evt.target.closest('.element').remove();
@@ -62,36 +51,32 @@ function setEventListener(card){
 
     const imageClick = card.querySelector('.element__image');
     imageClick.addEventListener('click', (evt) => {
-            openPopup(2);
+            openPopup(popupPhoto);
             cardToPopup(evt);
         })
 }
 //
 //общая функция для открытия всех попапов
- const editButton = document.querySelector('.profile__edit-button');
- const popup = document.querySelectorAll('.popup');
- const addPhotoButton = document.querySelector('.profile__add-button');
- const popupImage = document.querySelector('.popup__image');
- const popupText = document.querySelector('.popup__text');
+ 
 
-
- const openPopup = (num) => {
-    popup[num].classList.add('popup_active');
-    setCloseButton(num);
+ const openPopup = (popup) => {
+    popup.classList.add('popup_active');
  }
+//перебор нодлиста попапов и назначение каждому из них своей кнопки закрытия
+const setCloseButtonAll = () => {
+    popups.forEach(setCloseButton)
+}
 
-
-
-//объявление собственной кнопки закрытия для каждого попапа
- function setCloseButton(num) {
-    const closeButton = popup[num].querySelector('.popup__close');
+//объявление собственной кнопки закрытия для любого попапа
+ function setCloseButton(popup) {
+    const closeButton = popup.querySelector('.popup__close');
     closeButton.addEventListener('click',() => {
-        closePopup(num)
+        closePopup(popup)
     })
  }
 //функция закрытия попапа
-const closePopup = (num) => {
-    popup[num].classList.remove('popup_active');
+const closePopup = (popup) => {
+    popup.classList.remove('popup_active');
     
 }
 //функция автозаполнения полей для ввода
@@ -108,12 +93,12 @@ function autoInput() {
 
  //открытие попапа редактирования профиля по клику
 editButton.addEventListener('click', () => {
-    openPopup(0);
+    openPopup(popupEdit);
     autoInput();
 })
 //открытие попапа добавления фото по клику
 addPhotoButton.addEventListener('click', () => {
-    openPopup(1);
+    openPopup(popupAddPhoto);
 })
 //отправка формы для попапа редактирования профиля
 const profileEditForm = document.querySelector('#form-edit');
@@ -121,10 +106,7 @@ function formSubmitProfile(evt) {
     evt.preventDefault();
     profileName.textContent = inputProfileName.value;
     profileSubname.textContent = inputProfileSubname.value;
-    evt.target.closest('.popup').classList.remove('popup_active');
-    console.log(initialCards);
-
-    closePopup(0)//закрытие попапа при отправке формы!!!!!!!!
+    closePopup(popupEdit);
 }
 profileEditForm.addEventListener('submit', formSubmitProfile)
 
@@ -141,9 +123,8 @@ function formSubmitPhoto(evt) {
     const newElementArr = {title: inputTitlePhoto.value, link: inputLinkPhoto.value};
     initialCards.unshift(newElementArr);
     renderItem(initialCards[0]);
-    closePopup(1);
-    inputTitlePhoto.value = ''
-    inputLinkPhoto.value = ''
+    closePopup(popupAddPhoto);
+    evt.target.reset();
 }
 addPhotoForm.addEventListener('submit', formSubmitPhoto);
 
@@ -153,12 +134,13 @@ const cardToPopup = (evt) => {
 
     const imageCard = evt.target;
     const textCard = evt.target.closest('.element').querySelector('.element__name')
-    console.log(textCard);
-    console.log(imageCard);
     popupImage.src = imageCard.src;
+    popupImage.alt = imageCard.alt;
     popupText.textContent = textCard.textContent;
    
 }
 
 //вызов функции достающей карточки из массива
 renderItems();
+//вызов функции присваивающей соответствующие кнопки закрытия попапам
+setCloseButtonAll();
