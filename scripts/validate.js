@@ -71,13 +71,14 @@
 
 
 
-
+/////////////////////////////////////////////////////////////////////////
 //функция отвечающая за отображение ошибки
 const showError = (formElement, input, errorMessage, setting) => {
   const errorElement = formElement.querySelector(`#${input.id}-error`)
   input.classList.add(setting.inputErrorClass);
   errorElement.textContent = errorMessage;
 };
+
 //функция отвечающая за скрытие ошибки в инпуте
 const hideError = (formElement, input, setting) => {
   const errorElement = formElement.querySelector(`#${input.id}-error`)
@@ -108,33 +109,30 @@ function setEventLiseners(formElement, setting) {
 }
 
 
-//функция валидирующая форму при вызове
+//функция валидирующая кнопку при вызове
 function validateForm(formElement, setting) {
   const inputList = Array.from(formElement.querySelectorAll(setting.inputSelector));
   const buttonElement = formElement.querySelector(setting.submitButtonSelector);
   toggleButtonState(inputList, buttonElement, setting);
+  
+}
+//функция валидирующая инпуты при вызове
+function validateInput(formElement, setting){
+  const inputList = Array.from(formElement.querySelectorAll(setting.inputSelector));
   inputList.forEach((inputElement) => {
     checkInputValidity(formElement, inputElement, setting)
   })
 }
 
 
-
-
-//функция включающая валидацию во всех форма
-function enableValidation(setting) {
-  const formList = Array.from(document.querySelectorAll(setting.formSelector))
-  formList.forEach((formElement) => {
-    setEventLiseners(formElement, setting)
-    validateForm(formElement, setting)
-  })
-}
 //функция проверки валидности всех инпутов в форме 
 function hasInvalidInput(inputList) {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
 })
 }
+
+
 //функция отвечающая за состояние кнопки в зависимости от того
 //есть ли хоть один невалидный инпут
 function toggleButtonState(inputList, buttonElement, setting) {
@@ -147,6 +145,17 @@ function toggleButtonState(inputList, buttonElement, setting) {
     buttonElement.removeAttribute('disabled', true)
   }
 }
+
+
+//функция включающая валидацию во всех форма
+function enableValidation(setting) {
+  const formList = Array.from(document.querySelectorAll(setting.formSelector))
+  formList.forEach((formElement) => {
+    setEventLiseners(formElement, setting)
+    validateForm(formElement, setting)
+  })
+}
+
 
 
 

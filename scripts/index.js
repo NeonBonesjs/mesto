@@ -8,7 +8,7 @@ const popupPhoto = document.querySelector('.popup_photo');
 const buttonAddPhoto = document.querySelector('.profile__add-button');
 const popupImage = document.querySelector('.popup__image');
 const popupText = document.querySelector('.popup__text');
-
+const profileEditForm = document.querySelector('#form-edit');
 
 // Реализовал появление карточек из заданного массива
 
@@ -95,14 +95,22 @@ buttonEdit.addEventListener('click', () => {
     openPopup(popupEdit);
     autoInput();
     setClosePopupClickEsc();
-    enableValidation({
+    validateInput(profileEditForm, {
         formSelector: '.popup__forms',
         inputSelector: '.popup__form',
         submitButtonSelector: '.popup__button-save',
         inactiveButtonClass: 'popup__button-save_invalid',
         inputErrorClass: 'popup__form_error',
         errorClass: 'popup__error'
-      });
+      })
+    validateForm(profileEditForm, {
+        formSelector: '.popup__forms',
+        inputSelector: '.popup__form',
+        submitButtonSelector: '.popup__button-save',
+        inactiveButtonClass: 'popup__button-save_invalid',
+        inputErrorClass: 'popup__form_error',
+        errorClass: 'popup__error'
+      })
 })
 //открытие попапа добавления фото по клику
 buttonAddPhoto.addEventListener('click', () => {
@@ -112,7 +120,6 @@ buttonAddPhoto.addEventListener('click', () => {
 
 })
 //отправка формы для попапа редактирования профиля
-const profileEditForm = document.querySelector('#form-edit');
 function formSubmitProfile(evt) {
     evt.preventDefault();
     profileName.textContent = inputProfileName.value;
@@ -194,7 +201,7 @@ function removeListenerClosePopupClickEsc() {
 
 
 
-
+autoInput()
 
 //вызов функции достающей карточки из массива
 renderItems();
