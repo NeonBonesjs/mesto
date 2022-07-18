@@ -37,3 +37,6 @@
 @import url(../blocks/root/__page/root__page.css);
 @import url(../blocks/element/__like-button/_active/element__like-button_active.css);
 @import url(../blocks/popup/_active/popup_active.css);
+@import url(../blocks/popup/__button-save/_invalid/popup__button-save_invalid.css);
+@import url(../blocks/popup/__error/popup__error.css);
+@import url(../blocks/popup/__form/_error/popup__form_error.css);

@@ -7,9 +7,11 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
+  width: calc(100% - 72px);
 }
 @media screen and (max-width:550px) {
   .popup__form{
     margin: 0 22px 30px 22px;
+    width: calc(100% - 44px);
   }
 }

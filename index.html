@@ -37,20 +37,31 @@
                     <h2 class="popup__title">
                         Редактировать профиль
                     </h2>
-                    <form class="popup__forms" name="form-edit" id="form-edit">
-
+                    <form class="popup__forms" name="form-edit" id="form-edit" novalidate>
+                        <div>
                         <input
                             type="text"
                             name="form__name"
                             class="popup__form popup__form_type_name"
                             value=""
-                            id="input-profile-name">
+                            id="input-profile-name" 
+                            required
+                            minlength="2"
+                            maxlength="40">
+                        <span id="input-profile-name-error" class="popup__error"></span>
+                        </div>
+                        <div>
                         <input
                             type="text"
                             name="form__subname"
                             class="popup__form popup__form_type_subname"
                             value=""
-                            id="input-profile-subname">
+                            id="input-profile-subname"
+                            required
+                            minlength="2"
+                            maxlength="200">
+                        <span id="input-profile-subname-error" class="popup__error"></span>
+                        </div>
                         <button type="submit" class="popup__button-save" id="submit-profile">Сохранить</button>
                     </form>
                     <button class="popup__close" type="button"></button>
@@ -61,23 +72,31 @@
                     <h2 class="popup__title">
                         Новое место
                     </h2>
-                    <form class="popup__forms" name="form-edit" id="add-photo-form">
-
+                    <form class="popup__forms" name="form-edit" id="add-photo-form" novalidate>
+                        <div>
                         <input
                             type="text"
                             name="form__name"
                             class="popup__form popup__form_type_name"
                             value=""
                             placeholder="Название"
-                            id="input-title-photo">
-                            
+                            id="input-title-photo"
+                            required
+                            minlength="2"
+                            maxlength="30">
+                        <span id="input-title-photo-error" class="popup__error"></span>
+                        </div>
+                        <div>
                         <input
-                            type="text"
+                            type="url"
                             name="form__subname"
                             class="popup__form popup__form_type_subname"
                             value=""
                             placeholder="Ссылка на картику"
-                            id="input-link-photo">
+                            id="input-link-photo"
+                            required>
+                        <span id="input-link-photo-error" class="popup__error"></span>
+                        </div>
                         <button type="submit" class="popup__button-save">Сохранить</button>
                     </form>
                     <button class="popup__close" type="button"></button>
@@ -105,5 +124,6 @@
         </template>
         <script src="./scripts/cards.js"></script>
         <script src="./scripts/index.js"></script>
+        <script src="./scripts/validate.js"></script>
     </body>
 </html>
