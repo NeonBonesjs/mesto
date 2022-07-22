@@ -19,15 +19,16 @@ const renderItems = () => {
 
 const renderItem = (item) => {
     
-    elementList.insertBefore(createItem(item), elementList.firstElementChild);//функция вставки карточки
+    elementList.prepend(createItem(item));//функция вставки карточки
 
 }
 
     const createItem = (item) => {
     const card = elementTemplate.cloneNode(true);
-    card.querySelector('.element__name').textContent = item.title;//функция создания карточки
-    card.querySelector('.element__image').src = item.link;
-    card.querySelector('.element__image').alt = item.title;
+    card.querySelector('.element__name').textContent = item.title;
+    const cardImage = card.querySelector('.element__image');         //функция создания карточки
+    cardImage.src = item.link;
+    cardImage.alt = item.title;
     setEventListenerCard(card);
     return card;
     }
@@ -51,7 +52,6 @@ function setEventListenerCard(card){
     imageClick.addEventListener('click', (evt) => {
             openPopup(popupPhoto);
             cardToPopup(evt);
-            setClosePopupClickEsc();
         })
 }
 //
@@ -60,6 +60,7 @@ function setEventListenerCard(card){
 
  const openPopup = (popup) => {
     popup.classList.add('popup_active');
+    document.addEventListener('keydown', closeByEsc);
  }
 //перебор нодлиста попапов и назначение каждому из них своей кнопки закрытия
 const setCloseButtonAll = () => {
@@ -76,7 +77,8 @@ const setCloseButtonAll = () => {
 //функция закрытия попапа
 const closePopup = (popup) => {
     popup.classList.remove('popup_active');
-    removeListenerClosePopupClickEsc()
+    document.removeEventListener('keydown', closeByEsc);
+
 }
 //функция автозаполнения полей для ввода
 const profileName = document.querySelector('.profile__name');
@@ -84,7 +86,7 @@ const profileSubname = document.querySelector('.profile__subname');
 const inputProfileName = document.querySelector('#input-profile-name');
 const inputProfileSubname = document.querySelector('#input-profile-subname');
 
-function autoInput() {
+function fillInput() {
     inputProfileName.value = profileName.textContent;
     inputProfileSubname.value = profileSubname.textContent;
 }
@@ -93,8 +95,7 @@ function autoInput() {
  //открытие попапа редактирования профиля по клику
 buttonEdit.addEventListener('click', () => {
     openPopup(popupEdit);
-    autoInput();
-    setClosePopupClickEsc();
+    fillInput();
     validateInput(profileEditForm, {
         formSelector: '.popup__forms',
         inputSelector: '.popup__form',
@@ -115,22 +116,28 @@ buttonEdit.addEventListener('click', () => {
 //открытие попапа добавления фото по клику
 buttonAddPhoto.addEventListener('click', () => {
     openPopup(popupAddPhoto);
-    setClosePopupClickEsc();
-
+    validateForm(PhotoAddForm, {
+        formSelector: '.popup__forms',
+        inputSelector: '.popup__form',
+        submitButtonSelector: '.popup__button-save',
+        inactiveButtonClass: 'popup__button-save_invalid',
+        inputErrorClass: 'popup__form_error',
+        errorClass: 'popup__error'
+      })
 
 })
 //отправка формы для попапа редактирования профиля
-function formSubmitProfile(evt) {
+function SubmitProfileForm(evt) {
     evt.preventDefault();
     profileName.textContent = inputProfileName.value;
     profileSubname.textContent = inputProfileSubname.value;
     closePopup(popupEdit);
 }
-profileEditForm.addEventListener('submit', formSubmitProfile)
+profileEditForm.addEventListener('submit', SubmitProfileForm)
 
 
 //добавление новой фотографии
-const addPhotoForm = document.querySelector('#add-photo-form');
+const PhotoAddForm = document.querySelector('#add-photo-form');
 const inputTitlePhoto = document.querySelector('#input-title-photo');
 const inputLinkPhoto = document.querySelector('#input-link-photo');
 
@@ -138,13 +145,20 @@ const inputLinkPhoto = document.querySelector('#input-link-photo');
 //отправка формы для добовления карточки
 function formSubmitPhoto(evt) {
     evt.preventDefault();
-    const newElementArr = {title: inputTitlePhoto.value, link: inputLinkPhoto.value};
-    initialCards.unshift(newElementArr);
-    renderItem(initialCards[0]);
+    // const newElementArr = {title: inputTitlePhoto.value, link: inputLinkPhoto.value};
+    // initialCards.unshift(newElementArr);
+    // renderItem(initialCards[0]);
+    const card = elementTemplate.cloneNode(true);
+    card.querySelector('.element__name').textContent = inputTitlePhoto.value;
+    const cardImage = card.querySelector('.element__image');        
+    cardImage.src = inputLinkPhoto.value;
+    cardImage.alt = inputTitlePhoto.value;
+    setEventListenerCard(card);
+    elementList.prepend(card)
     closePopup(popupAddPhoto);
     evt.target.reset();
 }
-addPhotoForm.addEventListener('submit', formSubmitPhoto);
+PhotoAddForm.addEventListener('submit', formSubmitPhoto);
 
 
 //функция для присвоения полей карточки полям попапа
@@ -178,30 +192,22 @@ function closePopupClickOverlay (popup, evt) {
     }
 }
 
+//функция закрытия попапа кликом на esc
+
+function closeByEsc(evt) {
+    if (evt.key === 'Escape') {
+      const openedPopup = document.querySelector('.popup_active');
+      closePopup(openedPopup); 
+    }
+}  
 
 
 
-//функция которая будет вешать событие закрытия на какой-либо попап
-function setClosePopupClickEsc() {
-    document.addEventListener('keydown',closePopupClickEsc)
-}
-//функция закрытия попапа кликом на Esc
-function closePopupClickEsc (evt) {
-    if(evt.key === 'Escape'){
-        evt.currentTarget.querySelector('.popup_active').classList.remove('popup_active')
-        console.log('!!!');
-        removeListenerClosePopupClickEsc()  ///////////////////////////
-    } 
-}
-
-//функция убирающая слушатель 
-function removeListenerClosePopupClickEsc() {
-    document.removeEventListener('keydown', closePopupClickEsc)
-} 
 
 
 
-autoInput()
+
+// fillInput()
 
 //вызов функции достающей карточки из массива
 renderItems();
