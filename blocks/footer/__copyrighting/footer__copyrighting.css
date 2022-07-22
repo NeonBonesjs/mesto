@@ -1,16 +1,11 @@
 .footer__copyrighting {
-  margin: 0 200px;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
   color: #545454;
 }
-@media screen and (max-width:1080px) {
-  .footer__copyrighting {
-    margin: 0 100px;
-  }
-}
+
 @media screen and (max-width:880px) {
   .footer__copyrighting {
     margin: 0 50px;
