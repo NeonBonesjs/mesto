@@ -116,7 +116,7 @@ buttonEdit.addEventListener('click', () => {
 //открытие попапа добавления фото по клику
 buttonAddPhoto.addEventListener('click', () => {
     openPopup(popupAddPhoto);
-    validateForm(PhotoAddForm, {
+    validateForm(photoAddForm, {
         formSelector: '.popup__forms',
         inputSelector: '.popup__form',
         submitButtonSelector: '.popup__button-save',
@@ -127,38 +127,31 @@ buttonAddPhoto.addEventListener('click', () => {
 
 })
 //отправка формы для попапа редактирования профиля
-function SubmitProfileForm(evt) {
+function submitProfileForm(evt) {
     evt.preventDefault();
     profileName.textContent = inputProfileName.value;
     profileSubname.textContent = inputProfileSubname.value;
     closePopup(popupEdit);
 }
-profileEditForm.addEventListener('submit', SubmitProfileForm)
+profileEditForm.addEventListener('submit', submitProfileForm)
 
 
 //добавление новой фотографии
-const PhotoAddForm = document.querySelector('#add-photo-form');
+const photoAddForm = document.querySelector('#add-photo-form');
 const inputTitlePhoto = document.querySelector('#input-title-photo');
 const inputLinkPhoto = document.querySelector('#input-link-photo');
 
 
 //отправка формы для добовления карточки
-function formSubmitPhoto(evt) {
+function submitFormPhoto(evt) {
     evt.preventDefault();
-    // const newElementArr = {title: inputTitlePhoto.value, link: inputLinkPhoto.value};
-    // initialCards.unshift(newElementArr);
-    // renderItem(initialCards[0]);
-    const card = elementTemplate.cloneNode(true);
-    card.querySelector('.element__name').textContent = inputTitlePhoto.value;
-    const cardImage = card.querySelector('.element__image');        
-    cardImage.src = inputLinkPhoto.value;
-    cardImage.alt = inputTitlePhoto.value;
-    setEventListenerCard(card);
-    elementList.prepend(card)
+    const newItem = {title: inputTitlePhoto.value, link: inputLinkPhoto.value};
+    renderItem(newItem);
+    
     closePopup(popupAddPhoto);
     evt.target.reset();
 }
-PhotoAddForm.addEventListener('submit', formSubmitPhoto);
+photoAddForm.addEventListener('submit', submitFormPhoto);
 
 
 //функция для присвоения полей карточки полям попапа
