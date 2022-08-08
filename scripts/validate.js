@@ -161,11 +161,11 @@ function enableValidation(setting) {
 
 
 
-enableValidation({
-    formSelector: '.popup__forms',
-    inputSelector: '.popup__form',
-    submitButtonSelector: '.popup__button-save',
-    inactiveButtonClass: 'popup__button-save_invalid',
-    inputErrorClass: 'popup__form_error',
-    errorClass: 'popup__error'
-  });
+// enableValidation({
+//     formSelector: '.popup__forms',
+//     inputSelector: '.popup__form',
+//     submitButtonSelector: '.popup__button-save',
+//     inactiveButtonClass: 'popup__button-save_invalid',
+//     inputErrorClass: 'popup__form_error',
+//     errorClass: 'popup__error'
+//   });

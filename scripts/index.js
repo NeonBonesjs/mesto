@@ -12,26 +12,26 @@ const profileEditForm = document.querySelector('#form-edit');
 
 // Реализовал появление карточек из заданного массива
 
-const renderItems = () => {
-    initialCards.forEach(renderItem);//прогон массива через функцию обработчик
-};
+// const renderItems = () => {
+//     initialCards.forEach(renderItem);//прогон массива через функцию обработчик
+// };
 
 
-const renderItem = (item) => {
+// const renderItem = (item) => {
     
-    elementList.prepend(createItem(item));//функция вставки карточки
+//     elementList.prepend(createItem(item));//функция вставки карточки
 
-}
+// }
 
-    const createItem = (item) => {
-    const card = elementTemplate.cloneNode(true);
-    card.querySelector('.element__name').textContent = item.title;
-    const cardImage = card.querySelector('.element__image');         //функция создания карточки
-    cardImage.src = item.link;
-    cardImage.alt = item.title;
-    setEventListenerCard(card);
-    return card;
-    }
+//     const createItem = (item) => {
+//     const card = elementTemplate.cloneNode(true);
+//     card.querySelector('.element__name').textContent = item.title;
+//     const cardImage = card.querySelector('.element__image');         //функция создания карточки
+//     cardImage.src = item.link;
+//     cardImage.alt = item.title;
+//     setEventListenerCard(card);
+//     return card;
+//     }
     
 
 function handleDelete(evt){
@@ -146,8 +146,7 @@ const inputLinkPhoto = document.querySelector('#input-link-photo');
 function submitFormPhoto(evt) {
     evt.preventDefault();
     const newItem = {title: inputTitlePhoto.value, link: inputLinkPhoto.value};
-    renderItem(newItem);
-    
+    renderCard(newItem);    
     closePopup(popupAddPhoto);
     evt.target.reset();
 }
@@ -203,6 +202,154 @@ function closeByEsc(evt) {
 // fillInput()
 
 //вызов функции достающей карточки из массива
-renderItems();
+// renderItems();
 //вызов функции присваивающей соответствующие кнопки закрытия попапам
 setCloseButtonAll();
+
+
+//новый функционал с классами
+class Card {
+
+    constructor(data, templateSelector){
+        this._templateSelector = templateSelector;
+        this._title = data.title;
+        this._link = data.link;
+    }
+
+    _getTemplate() {
+        const cardElement = 
+        document
+        .querySelector(this._templateSelector)
+        .content
+        .cloneNode(true);
+
+        return cardElement
+    }
+    
+    generateCard() {
+        this._element = this._getTemplate();
+        this._element.querySelector('.element__name').textContent = this._title;
+        this._element.querySelector('.element__image').src = this._link;
+        this._element.querySelector('.element__image').alt = this._title;
+        setEventListenerCard(this._element);
+        return this._element;
+    }
+
+}
+function renderCard (item) {
+    const card = new Card(item, '#element-template')
+    const cardElement = card.generateCard();
+    elementList.prepend(cardElement);
+}
+
+function renderCards() {
+    initialCards.forEach((item) => {
+        const card = new Card(item, '#element-template');
+        const cardElement = card.generateCard();
+        elementList.prepend(cardElement);
+    })
+}
+renderCards()
+
+class FormValidation {
+
+    constructor(setting, formElement){
+        this._formElement = formElement;
+        this._formSelector = setting.formSelector;
+        this._inputSelector = setting.inputSelector;
+        this._submitButtonSelector = setting.submitButtonSelector;
+        this._inactiveButtonClass = setting.inactiveButtonClass;
+        this._inputErrorClass = setting.inputErrorClass
+        this._errorClass = setting.errorClass
+    }
+
+
+
+
+
+    _getFormObject(){
+        const formObject = document.querySelector(this._formElement);
+        return formObject
+    }
+
+   
+    _showError = (input, errorMessage) => {
+        const errorElement = this._formObject.querySelector(`#${input.id}-error`);
+        input.classList.add(this._inputErrorClass);
+        errorElement.textContent = errorMessage;
+    }
+
+
+    _hideError = (input) => {
+        const errorElement = this._formObject.querySelector(`#${input.id}-error`);
+        input.classList.remove(this._inputErrorClass);
+        errorElement.textContent = '';
+    };
+
+    _checkInputValidity(inputElement) {
+        if (!inputElement.validity.valid){
+            this._showError(inputElement, inputElement.validationMessage)
+          }
+          else{
+            this._hideError(inputElement)
+          }
+    }
+    _setEventLiseners () {
+        this._formObject = this._getFormObject();
+
+        const inputList = Array.from(this._formObject.querySelectorAll(this._inputSelector));
+        this._buttonElement = this._formObject.querySelector(this._submitButtonSelector);
+        inputList.forEach((inputElement) => {
+          inputElement.addEventListener('input', () => {
+            this._checkInputValidity(inputElement)
+            this._toggleButtonState(inputList, this._buttonElement)
+          })
+        })
+    }
+
+    _toggleButtonState(inputList, buttonElement) {
+        if(this._hasInvalidInput(inputList)){
+          buttonElement.classList.add(this._inactiveButtonClass)
+          buttonElement.setAttribute('disabled', true)
+        }
+        else{
+          buttonElement.classList.remove(this._inactiveButtonClass)
+          buttonElement.removeAttribute('disabled', true)
+        }
+      }
+
+
+    _hasInvalidInput(inputList) {
+        return inputList.some((inputElement) => {
+          return !inputElement.validity.valid;
+      })
+    }
+
+    _validateForm = () => {
+        const inputList = Array.from(this._formObject.querySelectorAll(this._inputSelector));
+
+        this._toggleButtonState(inputList, this._buttonElement);
+    }
+
+
+
+    enebleValidation() {
+        this._setEventLiseners()
+        this._validateForm()
+    }
+}
+
+function validateForm(formElement) {
+    const formValidation = new FormValidation({
+        formSelector: '.popup__forms',
+        inputSelector: '.popup__form',
+        submitButtonSelector: '.popup__button-save',
+        inactiveButtonClass: 'popup__button-save_invalid',
+        inputErrorClass: 'popup__form_error',
+        errorClass: 'popup__error'
+      }, formElement);
+    formValidation.enebleValidation();
+};
+validateForm('#add-photo-form');
+validateForm('#form-edit');
+
