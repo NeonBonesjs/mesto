@@ -1,3 +1,33 @@
+import Card from './Card.js';
+import FormValidation from './FormValidator.js';
+const initialCards = [
+    {
+      title: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+      title: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+      title: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+      title: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+      title: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+      title: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    },
+  ];
+  
+  
 const elementList = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element-template').content;
 const buttonEdit = document.querySelector('.profile__edit-button');
@@ -10,29 +40,6 @@ const popupImage = document.querySelector('.popup__image');
 const popupText = document.querySelector('.popup__text');
 const profileEditForm = document.querySelector('#form-edit');
 
-// Реализовал появление карточек из заданного массива
-
-// const renderItems = () => {
-//     initialCards.forEach(renderItem);//прогон массива через функцию обработчик
-// };
-
-
-// const renderItem = (item) => {
-    
-//     elementList.prepend(createItem(item));//функция вставки карточки
-
-// }
-
-//     const createItem = (item) => {
-//     const card = elementTemplate.cloneNode(true);
-//     card.querySelector('.element__name').textContent = item.title;
-//     const cardImage = card.querySelector('.element__image');         //функция создания карточки
-//     cardImage.src = item.link;
-//     cardImage.alt = item.title;
-//     setEventListenerCard(card);
-//     return card;
-//     }
-    
 
 function handleDelete(evt){
     evt.target.closest('.element').remove();
@@ -41,7 +48,7 @@ function handleLike(evt){
     evt.target.classList.toggle('element__like-button_active')
 }
 //функция которая присваивает слушателей карточке
-function setEventListenerCard(card){
+export function setEventListenerCard(card){
     const deleteButton = card.querySelector('.element__trash');
     deleteButton.addEventListener('click',(evt) => {handleDelete(evt)});
     
@@ -96,34 +103,13 @@ function fillInput() {
 buttonEdit.addEventListener('click', () => {
     openPopup(popupEdit);
     fillInput();
-    validateInput(profileEditForm, {
-        formSelector: '.popup__forms',
-        inputSelector: '.popup__form',
-        submitButtonSelector: '.popup__button-save',
-        inactiveButtonClass: 'popup__button-save_invalid',
-        inputErrorClass: 'popup__form_error',
-        errorClass: 'popup__error'
-      })
-    validateForm(profileEditForm, {
-        formSelector: '.popup__forms',
-        inputSelector: '.popup__form',
-        submitButtonSelector: '.popup__button-save',
-        inactiveButtonClass: 'popup__button-save_invalid',
-        inputErrorClass: 'popup__form_error',
-        errorClass: 'popup__error'
-      })
+    validateForm('#form-edit')
 })
 //открытие попапа добавления фото по клику
 buttonAddPhoto.addEventListener('click', () => {
     openPopup(popupAddPhoto);
-    validateForm(photoAddForm, {
-        formSelector: '.popup__forms',
-        inputSelector: '.popup__form',
-        submitButtonSelector: '.popup__button-save',
-        inactiveButtonClass: 'popup__button-save_invalid',
-        inputErrorClass: 'popup__form_error',
-        errorClass: 'popup__error'
-      })
+    validateForm('#add-photo-form');
+
 
 })
 //отправка формы для попапа редактирования профиля
@@ -194,48 +180,10 @@ function closeByEsc(evt) {
 }  
 
 
-
-
-
-
-
-// fillInput()
-
-//вызов функции достающей карточки из массива
-// renderItems();
-//вызов функции присваивающей соответствующие кнопки закрытия попапам
 setCloseButtonAll();
 
 
-//новый функционал с классами
-class Card {
 
-    constructor(data, templateSelector){
-        this._templateSelector = templateSelector;
-        this._title = data.title;
-        this._link = data.link;
-    }
-
-    _getTemplate() {
-        const cardElement = 
-        document
-        .querySelector(this._templateSelector)
-        .content
-        .cloneNode(true);
-
-        return cardElement
-    }
-    
-    generateCard() {
-        this._element = this._getTemplate();
-        this._element.querySelector('.element__name').textContent = this._title;
-        this._element.querySelector('.element__image').src = this._link;
-        this._element.querySelector('.element__image').alt = this._title;
-        setEventListenerCard(this._element);
-        return this._element;
-    }
-
-}
 function renderCard (item) {
     const card = new Card(item, '#element-template')
     const cardElement = card.generateCard();
@@ -251,93 +199,7 @@ function renderCards() {
 }
 renderCards()
 
-class FormValidation {
 
-    constructor(setting, formElement){
-        this._formElement = formElement;
-        this._formSelector = setting.formSelector;
-        this._inputSelector = setting.inputSelector;
-        this._submitButtonSelector = setting.submitButtonSelector;
-        this._inactiveButtonClass = setting.inactiveButtonClass;
-        this._inputErrorClass = setting.inputErrorClass
-        this._errorClass = setting.errorClass
-    }
-
-
-
-
-
-    _getFormObject(){
-        const formObject = document.querySelector(this._formElement);
-        return formObject
-    }
-
-   
-    _showError = (input, errorMessage) => {
-        const errorElement = this._formObject.querySelector(`#${input.id}-error`);
-        input.classList.add(this._inputErrorClass);
-        errorElement.textContent = errorMessage;
-    }
-
-
-    _hideError = (input) => {
-        const errorElement = this._formObject.querySelector(`#${input.id}-error`);
-        input.classList.remove(this._inputErrorClass);
-        errorElement.textContent = '';
-    };
-
-    _checkInputValidity(inputElement) {
-        if (!inputElement.validity.valid){
-            this._showError(inputElement, inputElement.validationMessage)
-          }
-          else{
-            this._hideError(inputElement)
-          }
-    }
-    _setEventLiseners () {
-        this._formObject = this._getFormObject();
-
-        const inputList = Array.from(this._formObject.querySelectorAll(this._inputSelector));
-        this._buttonElement = this._formObject.querySelector(this._submitButtonSelector);
-        inputList.forEach((inputElement) => {
-          inputElement.addEventListener('input', () => {
-            this._checkInputValidity(inputElement)
-            this._toggleButtonState(inputList, this._buttonElement)
-          })
-        })
-    }
-
-    _toggleButtonState(inputList, buttonElement) {
-        if(this._hasInvalidInput(inputList)){
-          buttonElement.classList.add(this._inactiveButtonClass)
-          buttonElement.setAttribute('disabled', true)
-        }
-        else{
-          buttonElement.classList.remove(this._inactiveButtonClass)
-          buttonElement.removeAttribute('disabled', true)
-        }
-      }
-
-
-    _hasInvalidInput(inputList) {
-        return inputList.some((inputElement) => {
-          return !inputElement.validity.valid;
-      })
-    }
-
-    _validateForm = () => {
-        const inputList = Array.from(this._formObject.querySelectorAll(this._inputSelector));
-
-        this._toggleButtonState(inputList, this._buttonElement);
-    }
-
-
-
-    enebleValidation() {
-        this._setEventLiseners()
-        this._validateForm()
-    }
-}
 
 function validateForm(formElement) {
     const formValidation = new FormValidation({
