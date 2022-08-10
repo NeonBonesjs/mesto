@@ -34,10 +34,10 @@ const buttonEdit = document.querySelector('.profile__edit-button');
 const popups = document.querySelectorAll('.popup');
 const popupEdit = document.querySelector('.popup_edit');
 const popupAddPhoto = document.querySelector('.popup_add-photo');
-const popupPhoto = document.querySelector('.popup_photo');
+export const popupPhoto = document.querySelector('.popup_photo');
 const buttonAddPhoto = document.querySelector('.profile__add-button');
-const popupImage = document.querySelector('.popup__image');
-const popupText = document.querySelector('.popup__text');
+export const popupImage = document.querySelector('.popup__image');
+export const popupText = document.querySelector('.popup__text');
 const profileEditForm = document.querySelector('#form-edit');
 
 
@@ -48,7 +48,7 @@ function handleLike(evt){
     evt.target.classList.toggle('element__like-button_active')
 }
 //функция которая присваивает слушателей карточке
-export function setEventListenerCard(card){
+function setEventListenerCard(card){
     const deleteButton = card.querySelector('.element__trash');
     deleteButton.addEventListener('click',(evt) => {handleDelete(evt)});
     
@@ -65,22 +65,11 @@ export function setEventListenerCard(card){
 //общая функция для открытия всех попапов
  
 
- const openPopup = (popup) => {
+ export const openPopup = (popup) => {
     popup.classList.add('popup_active');
     document.addEventListener('keydown', closeByEsc);
  }
-//перебор нодлиста попапов и назначение каждому из них своей кнопки закрытия
-const setCloseButtonAll = () => {
-    popups.forEach(setCloseButton)
-}
 
-//объявление собственной кнопки закрытия для любого попапа
- function setCloseButton(popup) {
-    const closeButton = popup.querySelector('.popup__close');
-    closeButton.addEventListener('click',() => {
-        closePopup(popup)
-    })
- }
 //функция закрытия попапа
 const closePopup = (popup) => {
     popup.classList.remove('popup_active');
@@ -103,14 +92,14 @@ function fillInput() {
 buttonEdit.addEventListener('click', () => {
     openPopup(popupEdit);
     fillInput();
-    validateForm('#form-edit')
+    popupEditProfileValidator.validateInput();
+    popupEditProfileValidator.validateButton();
 })
 //открытие попапа добавления фото по клику
 buttonAddPhoto.addEventListener('click', () => {
     openPopup(popupAddPhoto);
     validateForm('#add-photo-form');
-
-
+    popupAddValidator.validateButton();
 })
 //отправка формы для попапа редактирования профиля
 function submitProfileForm(evt) {
@@ -165,7 +154,7 @@ popupPhoto.addEventListener('click', (evt) => {
 
 //функция закрытия попапа кликом на оверлей
 function closePopupClickOverlay (popup, evt) {
-    if(evt.target === evt.currentTarget){
+    if(evt.target === evt.currentTarget || (evt.target.classList.contains('popup__close'))){
         closePopup(popup);
     }
 }
@@ -180,22 +169,22 @@ function closeByEsc(evt) {
 }  
 
 
-setCloseButtonAll();
+
+function returnCard (item) {
+const card = new Card(item, '#element-template');
+const cardElement = card.generateCard();
+return cardElement
+}
+
 
 
 
 function renderCard (item) {
-    const card = new Card(item, '#element-template')
-    const cardElement = card.generateCard();
-    elementList.prepend(cardElement);
+    elementList.prepend(returnCard(item));
 }
 
 function renderCards() {
-    initialCards.forEach((item) => {
-        const card = new Card(item, '#element-template');
-        const cardElement = card.generateCard();
-        elementList.prepend(cardElement);
-    })
+    initialCards.forEach(renderCard)
 }
 renderCards()
 
@@ -211,7 +200,10 @@ function validateForm(formElement) {
         errorClass: 'popup__error'
       }, formElement);
     formValidation.enebleValidation();
+    return formValidation
 };
-validateForm('#add-photo-form');
-validateForm('#form-edit');
 
+const popupAddValidator = validateForm('#add-photo-form');
+popupAddValidator.enebleValidation();
+const popupEditProfileValidator = validateForm('#form-edit');
+popupEditProfileValidator.enebleValidation()
