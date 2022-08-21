@@ -1,4 +1,22 @@
-import index from "../pages/index.css"
+import index from "../pages/index.css";
+// import logo from "../image/logo.svg";
+// import avatar from "../image/Avatar.png";
+// const images = [
+//   {name: 'logo', image: logo},
+//   {name: 'avatar', image: avatar}
+// ]
+const logo = new URL('../image/logo.svg', import.meta.url);
+const avatar = new URL('../image/Avatar.png', import.meta.url);
+
+const images = [
+    {name: 'logo', image: logo},
+    {name: 'avatar', link: avatar}
+  ]
+
+document.querySelector('.logo').src = images[0].image;
+document.querySelector('.profile__avatar').src = images[1].link;
+
+
 import Card from "./Card.js";
 import FormValidation from "./FormValidator.js";
 import Section from "./Section.js";
