@@ -5,14 +5,14 @@ export default class UserInfo{
   }
 
   getUserInfo(){
-    const userInfo = {name:'', info:''};
-    userInfo.name = this._name.textContent;
-    userInfo.info = this._info.textContent;
+    const userInfo = {form__name:'', form__subname:''};
+    userInfo.form__name = this._name.textContent;
+    userInfo.form__subname = this._info.textContent;
     return userInfo
   }
 
   setUserInfo = (object) => {
-    this._name.textContent = object.input1;
-    this._info.textContent = object.input2;
+    this._name.textContent = object.form__name;
+    this._info.textContent = object.form__subname;
   }
 }

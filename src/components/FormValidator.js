@@ -9,10 +9,10 @@ export default class FormValidation {
     this._errorClass = setting.errorClass;
   }
 
-  _getFormObject() {
-    const formObject = document.querySelector(this._formElement);
-    return formObject;
-  }
+  // _getFormObject() {
+  //   const formObject = document.querySelector(this._formElement);
+  //   return formObject;
+  // }
 
   _showError = (input, errorMessage) => {
     const errorElement = this._formObject.querySelector(`#${input.id}-error`);
@@ -34,7 +34,7 @@ export default class FormValidation {
     }
   }
   _setEventLiseners() {
-    this._formObject = this._getFormObject();
+    this._formObject = this._formElement;
 
     this._inputList = Array.from(
       this._formObject.querySelectorAll(this._inputSelector)
@@ -68,7 +68,7 @@ export default class FormValidation {
 
   validateInput() {
     this._inputList.forEach((inputElement) => {
-      this._checkInputValidity(inputElement);
+      this._hideError(inputElement);
     });
   }
 
