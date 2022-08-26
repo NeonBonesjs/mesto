@@ -103,14 +103,12 @@ const editPopup = new PopupWithForm('.popup_edit', (evt, objectInputValues) => {
   console.log(object)
   userInfo.setUserInfo(object);
   editPopup.close();
-}, () => {
-  return userInfo.getUserInfo();
 })
 
 editPopup.setEventListeners();
 buttonEdit.addEventListener('click',() => {
   editPopup.open();
-  editPopup.fillInput();
+  editPopup.setInputValues(userInfo.getUserInfo());
   popupEditProfileValidator.validateButton();
   popupEditProfileValidator.validateInput();
 })

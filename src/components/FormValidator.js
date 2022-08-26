@@ -51,7 +51,7 @@ export default class FormValidation {
   }
 
   _toggleButtonState() {
-    if (this._hasInvalidInput(this._inputList)) {
+    if (this._hasInvalidInput()) {
       this._buttonElement.classList.add(this._inactiveButtonClass);
       this._buttonElement.setAttribute("disabled", true);
     } else {
@@ -60,8 +60,8 @@ export default class FormValidation {
     }
   }
 
-  _hasInvalidInput(inputList) {
-    return inputList.some((inputElement) => {
+  _hasInvalidInput() {
+    return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   }
