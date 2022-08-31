@@ -33,10 +33,13 @@
 @import url(../blocks/profile/__avatar/profile__avatar.css);
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__name/profile__name.css);
+@import url(../blocks/profile/__avatar-background/profile__avatar-background.css);
 @import url(../blocks/profile/__subname/profile__subname.css);
 @import url(../blocks/root/__page/root__page.css);
+@import url(../blocks/element/__number-like/element__number-like.css);
 @import url(../blocks/element/__like-button/_active/element__like-button_active.css);
 @import url(../blocks/popup/_active/popup_active.css);
 @import url(../blocks/popup/__button-save/_invalid/popup__button-save_invalid.css);
 @import url(../blocks/popup/__error/popup__error.css);
 @import url(../blocks/popup/__form/_error/popup__form_error.css);
+@import url(../blocks/popup/__title_delete/popup__title_delete.css);

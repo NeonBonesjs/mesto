@@ -1,0 +1,16 @@
+.profile__avatar-background{
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  position: relative;
+  border-radius: 50%;
+  transition: ease-in-out 0.4s opacity;
+  margin-right: 30px;
+}
+.profile__avatar-background:hover{
+  background-image: url(../../../image/editor.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 26px 26px;
+}

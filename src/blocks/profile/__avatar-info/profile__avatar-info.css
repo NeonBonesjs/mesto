@@ -1,5 +1,6 @@
 .profile__avatar-info{
   display: flex;
+  position: relative;
 }
 @media screen and (max-width:550px) {
   .profile__avatar-info{

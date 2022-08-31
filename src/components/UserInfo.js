@@ -12,7 +12,7 @@ export default class UserInfo{
   }
 
   setUserInfo = (object) => {
-    this._name.textContent = object.form__name;
-    this._info.textContent = object.form__subname;
+    this._name.textContent = object.name;
+    this._info.textContent = object.about;
   }
 }

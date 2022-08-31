@@ -13,8 +13,9 @@
             <main class="main">
                 <section class="profile page__profile">
                     <div class="profile__avatar-info">
-                        <img src="#" alt="аватар" class="profile__avatar">
-
+                        <div class="profile__avatar-background">
+                            <img src="#" alt="аватар" class="profile__avatar">
+                        </div>
                         <div class="profile__info">
                             <h1 class="profile__name">Жак-Ив Кусто</h1>
                             <p class="profile__subname">Исследователь океана</p>
@@ -29,7 +30,7 @@
             </main>
             <footer class="footer">
                 <p class="footer__copyrighting">
-                    © 2020 Mesto Russia
+                    © 2022 Mesto Russia
                 </p>
             </footer>
             <div class="popup popup_edit" id="popup-edit">
@@ -109,6 +110,36 @@
                     <button type="button" class="popup__close"></button>
                 </div>
             </div>
+            <div class="popup popup_delete-photo">
+                <div class="popup__container">
+                    <h2 class="popup__title popup__title_delete">Вы уверены?</h2>
+                    <button class="popup__button-save" type="button">Да</button>
+                    <button class="popup__close" type="button"></button>
+                </div>
+            </div>
+            <div class="popup popup_avatar" id="popup-new">
+                <div class="popup__container">
+                    <h2 class="popup__title">
+                        Обновить аватар
+                    </h2>
+                    <form class="popup__forms" name="form-edit" id="edit-avatar-form" novalidate>
+                        
+                        <div>
+                            <input
+                               type="url"
+                                name="form__subname"
+                                class="popup__form popup__form_type_subname"
+                                value=""
+                                placeholder="Ссылка на картику"
+                                id="input-link-photo"
+                                required>
+                            <span id="input-link-photo-error" class="popup__error"></span>
+                        </div>
+                        <button type="submit" class="popup__button-save">Сохранить</button>
+                    </form>
+                    <button class="popup__close" type="button"></button>
+                </div>
+            </div>
         </div>
         <template id="element-template">
             <div class="element">
@@ -117,7 +148,10 @@
                     <h2 class="element__name">
 
                     </h2>
-                    <button class="element__like-button" type="button"></button>
+                    <div class="element__like-plus-number">
+                        <button class="element__like-button" type="button"></button>
+                        <p class="element__number-like">0</p>
+                    </div>
                 </div>
                 <button type="button" class="element__trash"></button>
             </div>

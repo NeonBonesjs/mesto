@@ -35,7 +35,6 @@ export default class FormValidation {
   }
   _setEventLiseners() {
     this._formObject = this._formElement;
-
     this._inputList = Array.from(
       this._formObject.querySelectorAll(this._inputSelector)
     );
