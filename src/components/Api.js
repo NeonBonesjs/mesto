@@ -6,13 +6,21 @@ export default class Api {
   }
 
 
+  _getResponseData(res) {
+    if (!res.ok) {
+        return Promise.reject(`Ошибка: ${res.status}`);
+    }
+    return res.json();
+} 
+
+
   getUserInfo = () => {
     return fetch(`${this._baseUrl}/${this._groupId}/users/me`, {
       headers: {
         authorization: this._token
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject(`ошибка: ${res.status}`)); 
+      .then(res => this._getResponseData(res)); 
   }
 
 
@@ -23,7 +31,7 @@ export default class Api {
         authorization: this._token
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject(`ошибка: ${res.status}`))
+      .then(res => this._getResponseData(res)); 
   }
 
 
@@ -40,7 +48,7 @@ export default class Api {
         about: data.form__subname
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`ошибка: ${res.status}`)); 
+     .then(res => this._getResponseData(res)); 
   }
 
 
@@ -56,7 +64,7 @@ export default class Api {
         link: data.link
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`ошибка: ${res.status}`)); 
+      .then(res => this._getResponseData(res)); 
   }
 
 
@@ -67,7 +75,7 @@ export default class Api {
         authorization: this._token,
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+      .then(res => this._getResponseData(res)); 
   }
 
 
@@ -78,7 +86,7 @@ export default class Api {
         authorization: this._token, 
       }
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+     .then(res => this._getResponseData(res)); 
   }
 
 
@@ -90,7 +98,7 @@ export default class Api {
         authorization: this._token, 
       }
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+      .then(res => this._getResponseData(res)); 
   }
 
 
@@ -105,7 +113,7 @@ export default class Api {
         avatar: data.avatar
       })
     })
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`))
+      .then(res => this._getResponseData(res)); 
   }
 
 }

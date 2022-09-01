@@ -1,6 +1,6 @@
 
 export default class Card {
-  constructor(data, templateSelector, handleCardClick, handleTrashButton, handleLikeButton) {
+  constructor(data, templateSelector, handleCardClick, handleTrashButton, handleLikeButton, idUser) {
     this._templateSelector = templateSelector;
     this._title = data.name;
     this._link = data.link;
@@ -10,6 +10,7 @@ export default class Card {
     this._id = data._id
     this._ownerId = data.owner._id 
     this._handleLikeButton = handleLikeButton;
+    this._idUser = idUser;
   }
 
   _getTemplate() {
@@ -22,7 +23,7 @@ export default class Card {
   _setEventListners = () => {
     this._deleteButton = this._element.querySelector(".element__trash");
     this._deleteButton.addEventListener("click", this._handleTrashButton);
-    if(!(this._ownerId === '79de527279c5ab39b73b4c9d')){this._deleteButton.remove()}
+    if(!(this._ownerId === this._idUser)){this._deleteButton.remove()}
     this._likeButton.addEventListener("click", this._handleLikeButton);
     this._elementImage.addEventListener("click", () => {
       this._handleCardClick(this._link, this._title)
@@ -59,13 +60,5 @@ export default class Card {
     this._numberLikes.textContent = score;
   };
 
-
-  getCard = () => {
-    fetch('https://mesto.nomoreparties.co/v1/cohort-49/cards'), {
-      headers: {
-      authorization: '2f4f6221-2bd1-4593-b371-8424249e75f7'
-      }
-    }
-  }
   
 }

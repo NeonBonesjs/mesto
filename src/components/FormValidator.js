@@ -7,6 +7,14 @@ export default class FormValidation {
     this._inactiveButtonClass = setting.inactiveButtonClass;
     this._inputErrorClass = setting.inputErrorClass;
     this._errorClass = setting.errorClass;
+    this._formObject = this._formElement;
+    this._inputList = Array.from(
+      this._formObject.querySelectorAll(this._inputSelector)
+    );
+    this._buttonElement = this._formObject.querySelector(
+      this._submitButtonSelector
+    );
+
   }
 
   // _getFormObject() {
@@ -34,13 +42,8 @@ export default class FormValidation {
     }
   }
   _setEventLiseners() {
-    this._formObject = this._formElement;
-    this._inputList = Array.from(
-      this._formObject.querySelectorAll(this._inputSelector)
-    );
-    this._buttonElement = this._formObject.querySelector(
-      this._submitButtonSelector
-    );
+    
+   
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);

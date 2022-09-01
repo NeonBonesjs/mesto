@@ -1,9 +1,9 @@
 import Popup from "./Popup.js"
 
 export default class PopupDelete extends Popup{
-  constructor(popupSelector ,deleteCard){
+  constructor(popupSelector ,deleteItem){
     super(popupSelector);
-    this.deleteCard = deleteCard;
+    this.deleteItem = deleteItem;
     this._card ={}
   }
 
@@ -17,12 +17,11 @@ export default class PopupDelete extends Popup{
 
 
   setEventListeners () {
-    console.log(this._card)
     super.setEventListeners();
     // this.delete(this._card)
     this._popopDeleteButton = this._popup.querySelector('.popup__button-save');
     this._popopDeleteButton.addEventListener('click',() => {
-    this.deleteCard(this._card);
-    this.close()});
+    this.deleteItem(this._card);
+    });
   }
 }
